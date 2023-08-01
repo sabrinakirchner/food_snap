@@ -1,23 +1,38 @@
-import logo from './logo.svg';
 import './App.css';
+import FoodDisplay from './components/FoodDisplay';
+import Form from './components/Form';
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [food, setFood] = useState(null);
+
+  const getFood = async (searchTerm) => {
+    try {
+      const response = await fetch(
+        `https://world.openfoodfacts.org/api/v0/product/${searchTerm}.json`
+      );
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+
+      setFood(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const randomFood = "random"; // Change this to a random food item or provide a search term of your choice
+    getFood(randomFood);
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form foodsearch={getFood} />
+      <FoodDisplay food={food} />
     </div>
   );
 }
