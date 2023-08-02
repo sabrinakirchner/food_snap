@@ -1,22 +1,30 @@
 import React from 'react';
 
-export default function FoodDisplay({ food }) {
-  console.log(food);
-  
-  if (!food) {
-    return <div>Loading...</div>;
+export default function FoodDisplay({ food }){
+    console.log(food);
+
+    if(!food){
+        return <div>Loading ... </div>;
+    }
+
+    const { product } = food;
+
+    if (!product || !product.product_name) {
+    return <div>No data available</div>;
   }
 
-  return (
-    <div>
-      <h2>{food.product?.product_name}</h2>
-      <p>Ingredients:</p>
-      <img src={food.product?.image_ingredients_url} alt="Ingredients" />
-      <p>Nutrition:</p>
-      <img src={food.product?.image_nutrition_url} alt="Nutrition" />
-      <p>Front View:</p>
-      <img src={food.product?.image_front_url} alt="Front View" />
-      {/* Additional data you want to display */}
+  const productName = food.name;
+  const imageUrl = food.image_url;
+  const nutritionFacts = food.nutrition_facts;
+
+    return (
+       <div>
+      <h2>{productName}</h2>
+      <img src={imageUrl} alt={productName} />
+      <h3>Nutrition Facts:</h3>
+      <pre>{JSON.stringify(nutritionFacts, null, 2)}</pre>
     </div>
-  );
+      );
+
+
 }

@@ -1,7 +1,28 @@
-import React from 'react';
+import React, { useState } from "react";
 
-export default function Form({ food }) {
-  console.log(food);
-  // Handle the food data and display it here
-  return <div>Food Display</div>;
-}
+const Form = ({ onSearch }) => {
+  const [productName, setProductName] = useState("");
+
+  const handleInputChange = (event) => {
+    setProductName(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSearch(productName);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={productName}
+        onChange={handleInputChange}
+        placeholder="Enter product name..."
+      />
+      <button type="submit">Search</button>
+    </form>
+  );
+};
+
+export default Form;
