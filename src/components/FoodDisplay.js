@@ -21,25 +21,4 @@ export default function FoodDisplay({ food }){
       );
     }
 
-    /*
-    const { product } = food;
-
-    if (!product || !product.product_name) {
-    return <div>No data available</div>;
-  }
-
-  const productName = food.name;
-  const imageUrl = food.image_url;
-  //const nutritionFacts = food.nutrition_facts;
-
-    return (
-       <div>
-      <h2>{productName}</h2>
-      <img src={imageUrl} alt={productName} />
-      <h3> Receip:</h3>
-      <pre>{JSON.stringify(food, null, 2)}</pre>
-    </div>
-      );
-}
-
-*/
+    
