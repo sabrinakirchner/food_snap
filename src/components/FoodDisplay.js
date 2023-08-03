@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import SearchBar from './SearchBar';
+import { Link } from 'react-router-dom';
 
-export default function FoodDisplay() {
+function FoodDisplay() {
   const [food, setFood] = useState([]);
-  const apiKey = '88faa7075d6846de9fc046f723032532';
+  const apiKey = '88faa7075d6846de9fc046f723032532'; // Replace with your Spoonacular API key
 
   const handleSearch = async (ingredients) => {
     try {
@@ -26,8 +27,12 @@ export default function FoodDisplay() {
 
   return (
     <div>
-      <h1> Search for Recepies </h1>
+      <h1>Search for Recipes</h1>
+  
+      <Link to="/">Home</Link>
+      <br />
       <SearchBar onSearch={handleSearch} />
+
       <div className="recipe-list">
         {food.length > 0 ? (
           food.map((recipe, index) => (
@@ -42,6 +47,10 @@ export default function FoodDisplay() {
           <p>Food will show here! </p>
         )}
       </div>
+
     </div>
   );
 }
+
+export default FoodDisplay; 
+

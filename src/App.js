@@ -1,65 +1,23 @@
-import'./App.css';
-import FoodDisplay from './components/FoodDisplay';
-//import Form from './components/Form';
-import { useState } from 'react';
-import SearchBar from './components/SearchBar'
-import { Link } from 'react-router-dom'
 
-
+import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/Home'; // Import your Home component
+import FoodDisplay from './components/FoodDisplay';
 
-
-function Home() {
-  return(
-    <div>
-      <h1>Welcome Home Page! </h1>
-      <Link to="/Food-search">
-        <button>Food Search</button>
-      </Link>
-    </div>
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Food-search" element={<FoodDisplay />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
-function FoodSearch(){
-  const [food, setFood] = useState(null);
-  const apiKey ='88faa7075d6846de9fc046f723032532';
+export default App;
 
-  const getFood = async (ingredients) =>{
-console.log(ingredients);
-try{
-  const url = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${apiKey}&ingredients=${encodeURIComponent(ingredients)}`;
 
-  const response = await fetch(url);
-  if(response.ok){
-    throw new Error('Network reponse was not ok');
-  }
 
-  const data = await response.json();
-  console.log(data);
-  setFood(data);
-}catch (error){
-  console.error(error);
-}
-  };
-  return(
-    <div>
-    <h1></h1>
-    <FoodDisplay food={food}/>
-    </div>
-  )
-}
-
-function App(){
-  return(
-    <Router> 
-      <div className="App">
-        <Routes>
-          <Route path="/" exact element={<Home />}/>
-          <Route path="/Food-search" element={<FoodSearch />}/>
-        </Routes> 
-      </div> 
-    </Router> 
-  )
-}
-
-export default App; 
