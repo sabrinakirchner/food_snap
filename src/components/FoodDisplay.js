@@ -25,13 +25,32 @@ function FoodDisplay() {
     }
   };
 
+
+  const handleRecipeButtonClick = async (ingredients) => {
+    handleSearch(ingredients);
+  };
+
+
+  //buttons 
   return (
+
     <div>
+       <Link to="/" > 
+      <button> Home</button>
+      </Link>
+      
       <h1>Search for Recipes</h1>
-  
-      <Link to="/">Home</Link>
-      <br />
+    
+      
       <SearchBar onSearch={handleSearch} />
+
+      <h2></h2>
+      
+      <button onClick={() => handleRecipeButtonClick('lettuce')}>Salad</button>
+      <button onClick={() => handleRecipeButtonClick('pasta')}>Pasta</button>
+      <button onClick={() => handleRecipeButtonClick('tortillas')}>Tacos</button>
+      <button onClick={() => handleRecipeButtonClick('dessert')}>Dessert</button>
+
 
       <div className="recipe-list">
         {food.length > 0 ? (
@@ -39,7 +58,7 @@ function FoodDisplay() {
             <div key={index} className="recipe">
               <h2>{recipe.title}</h2>
               <img src={recipe.image} alt={recipe.title} />
-              <h3>Instructions:</h3>
+      
               <p>{recipe.instructions}</p>
             </div>
           ))
