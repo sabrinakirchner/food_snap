@@ -10,7 +10,8 @@ const SearchBar = ({ onSearch }) => {
     const handleSubmit =(event) =>{
         event.preventDefault(); 
         onSearch(barcode); 
-    }
+        setbarcode('');
+    };
     
     return(
         <form onSubmit={handleSubmit}>

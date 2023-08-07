@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-//import MyComponent from './MyComponent';  
+
 
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [foodImages, setFoodImages] = useState([]);
   const [filteredImages, setFilteredImages] = useState([]);
+  
 
+
+  //for the random Imagens. 
   useEffect(() => {
-    const apiKey = 'gHqU6G1H5Sb1nIHha14snLUqIgYUxnrt-FGYepisLFY';
-    const url = `https://api.unsplash.com/search/photos?page=1&query=food&client_id=${apiKey}`;
+    const unsplashApiKey = process.env.REACT_APP_UNSPLASH_API_KEY;
+    const url = `https://api.unsplash.com/photos/random?count=10&query=food&client_id=${unsplashApiKey}`;
+  
     
     axios
       .get(url)
       .then(response => {
-        setFoodImages(response.data.results);
-        setFilteredImages(response.data.results); 
+        console.log(response.data);
+        setFoodImages(response.data);
+        setFilteredImages(response.data); 
       })
       .catch(error => {
         console.error(error);
       });
   }, []);
+
+
+
 
   const handleSearch = async () => {
     if (searchQuery.trim() === '') {
@@ -30,10 +38,8 @@ function Home() {
       setFilteredImages(foodImages); 
     }else{
       try {
-        const apiKey = 'gHqU6G1H5Sb1nIHha14snLUqIgYUxnrt-FGYepisLFY';
-        const searchUrl = `https://api.unsplash.com/search/photos?page=1&query=${encodeURIComponent(
-          searchQuery
-        )}&client_id=${apiKey}`;
+        const unsplashApiKey = process.env.REACT_APP_UNSPLASH_API_KEY;
+        const searchUrl = `https://api.unsplash.com/search/photos?page=1&query=${encodeURIComponent(searchQuery)}&client_id=${unsplashApiKey}`;
   
         const response = await axios.get(searchUrl);
         //update image on search
@@ -44,36 +50,38 @@ function Home() {
     }
   };
 
-
+//handle button shortcut
   const handlePopularSearch = async (query) => {
     setSearchQuery(query);
   
     if (query === 'pizza' || query === 'pasta' || query === 'tacos' || query === 'dessert') {
       try {
-        const apiKey = 'gHqU6G1H5Sb1nIHha14snLUqIgYUxnrt-FGYepisLFY';
-        const searchUrl = `https://api.unsplash.com/search/photos?page=1&query=${encodeURIComponent(
-          query
-        )}&client_id=${apiKey}`;
+        const unsplashApiKey = process.env.REACT_APP_UNSPLASH_API_KEY;
+        const searchUrl = `https://api.unsplash.com/search/photos?page=1&query=${encodeURIComponent(query)}&client_id=${unsplashApiKey}`;
   
         const response = await axios.get(searchUrl);
         setFilteredImages(response.data.results);
+       
+      
       } catch (error) {
         console.error(error);
       }
     } else {
-      // Default behavior to show all images when popular search not recognized
+      //to show all images when popular search not recognized
       setFilteredImages(foodImages);
     }
   };
 
 
   return (
+
+    //fist button
     <div>
        <Link to="/Food-search">
         <button>Food Ideas</button>
       </Link>
 
-      <h1>Welcome !</h1>
+      <h1>Welcome foodies!</h1>
  
       <input
       type="text"
